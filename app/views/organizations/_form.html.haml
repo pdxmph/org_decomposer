@@ -1,0 +1,58 @@
+= form_for(@organization, :html => {:class => "form-horizontal"}) do |f|
+  - if @organization.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@organization.errors.count, "error")} prohibited this organization from being saved:"
+      %ul
+        - @organization.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :name, :class => 'col-sm-2 control-label'
+    .col-sm-4
+      = f.text_field :name, autofocus: true, :class => 'form-control'
+  .form-group
+    = f.label :kind, :class => 'col-sm-2 control-label'
+    .col-sm-4
+      = f.select :kind, options_for_select(["Scrum Team","Services Team","Organization","Employee Group"],"Scrum Team"),:class => 'form-control'
+
+
+  - if @organization.kind == "Scrum Team"
+
+    .row
+      = f.label "Engineers", :class => 'col-sm-2 control-label'
+      .col-sm-2
+        =f.collection_select :person_ids, @developers, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'} 
+    
+
+      = f.label "QA", :class => 'col-sm-2 control-label'
+      .col-sm-2
+        =f.collection_select :person_ids, @qa, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'} 
+
+      = f.label "QE", :class => 'col-sm-2 control-label'
+      .col-sm-2
+        =f.collection_select :person_ids, @qe, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'} 
+
+    .row.top-buffer
+      = f.label "Technical Publications", :class => 'col-sm-2 control-label'
+      .col-sm-2
+        =f.collection_select :person_ids, @docs, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'} 
+
+      = f.label "UX", :class => 'col-sm-2 control-label'
+      .col-sm-2
+        =f.collection_select :person_ids, @ux, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'} 
+
+      = f.label "Product", :class => 'col-sm-2 control-label'
+      .col-sm-2
+        =f.collection_select :person_ids, @prod, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'}
+
+    .row.top-buffer
+
+      = f.label "Project Management", :class => 'col-sm-2 control-label'
+      .col-sm-2
+        =f.collection_select :person_ids, @pm, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'} 
+
+
+    .row.top-buffer       
+      .actions.col-sm-offset-2
+        .col-sm-4
+          = f.submit 'Save', :class => 'btn btn-primary'

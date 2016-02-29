@@ -1,0 +1,8 @@
+%h3.col-sm-offset-1
+  = "Editing #{@organization.name}"
+
+= render 'form'
+
+= link_to 'Show', @organization
+\|
+= link_to 'Back', organizations_path

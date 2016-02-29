@@ -1,0 +1,75 @@
+%p#notice= notice
+
+%ol.breadcrumb
+  %li
+    = link_to "Home", root_path
+  %li
+    = link_to "Organizations", organizations_path
+
+  - if @organization.parent && @organization.parent.name != "Puppet Labs"
+    %li
+      = link_to @organization.parent.name, @organization.parent
+    
+  %li.active
+    = @organization.name
+  -# - if current_user.try(:super?)
+  -#   %li
+  -#     = link_to edit_team_area_path(@area, :team_id => @area.team.id) do
+  -#       Edit
+
+- if @organization.has_people
+  %strong
+    Total People:
+  = @organization.people.count
+
+- if @organization.kind == "Scrum Team"
+  - team_roles = ["Engineering", "Product Management", "Project Management", "UX", "QA", "QE", "Technical Publications"]
+  - team_roles.each_slice(4).each do |group|
+    .row.top-buffer
+      - group.each do |job|
+        .col-sm-2
+          = render 'people_list', :job => job
+  
+
+- if @organization.kind == "Services Team"
+  %br
+  %h3
+    Supported Teams
+
+  %table.table
+    %thead
+      %tr
+        %th Health
+        %th Team
+        %th Priority
+        %th Support
+    %tbody
+      - Organization.scrum_teams.each do |team|
+        = render :partial => "goals/index_row", :locals => {:scrum_team => team, :organization => @organization}
+  
+- if @organization.has_children
+  %h2
+    = "Groups within #{@organization.name}"
+
+  %table.table.sortable
+    %thead
+      %tr
+        %th Name
+        %th Kind
+        %th
+        %th
+        %th
+
+    %tbody
+      - @organizations.each do |organization|
+        %tr
+          %td= link_to organization.name, organization
+          %td= organization.kind
+          %td= link_to 'Edit', edit_organization_path(organization)
+          %td= link_to 'Destroy', organization, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br.top-buffer
+%br.top-buffer
+= link_to 'Edit', edit_organization_path(@organization)
+\|
+= link_to 'Back', organizations_path

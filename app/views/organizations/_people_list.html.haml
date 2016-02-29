@@ -1,0 +1,6 @@
+%strong
+  = job
+- @organization.people_in_job(job).each do |person|
+  %br
+  = person.fullname
+  

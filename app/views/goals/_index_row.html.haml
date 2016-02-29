@@ -1,0 +1,32 @@
+- goal = Goal.where("support_id = ? and name = ? and organization_id = ?", scrum_team.id, scrum_team.name, organization.id).last
+
+- goal.health == 0 ? row_data = "unknown" : row_data = "known"
+
+%tr{:id => "goal_row_#{goal.id}", "data-value" => row_data }
+
+  %td{:id => "goal_health_#{goal.id}", "data-value" => goal.health }
+    = health_indicator(goal)
+  
+  %td{"data-value" => goal.name, :id => "goal_name_#{goal.id}"}
+    -# = link_to goal.name, team_area_path(:id => area.id, :team_id => area.team.id)
+    = goal.name  
+
+  %td{"data-value" => goal.priority, :id => "td_priority_#{goal.id}"}
+    %div{:id => "priority-button-#{goal.id}"}
+      = render :partial => "goals/priority_button", :locals => {:goal_id => goal.id}
+           
+  %td{"data-value" => goal.support, :id => "td_goal_support_#{goal.id}"}
+    %div{:id => "support_button-#{goal.id}"}
+      = render :partial => "goals/support_button", :locals => {:goal_id => goal.id}
+
+  
+  -# - if current_user.try(:super?) || current_user.try(:admin?) && current_user.team_id == area.team.id
+  -#   %td{:id => "td_destroy_#{area.id}"}
+  -#     = link_to edit_team_area_path(:id => area.id, :team_id => area.team.id), :class => "text-default" do
+  -#       %span.glyphicon.glyphicon-pencil
+  -#     &nbsp;
+  -#     &nbsp;
+  -#     = link_to team_area_path(:id => area.id, :team_id => area.team.id),  :method => :delete, :remote => true, :data =>  { confirm: "Really delete #{area.name}?" }, :class => "text-danger" do
+  -#       %span.glyphicon.glyphicon-remove
+
+

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @goal.name
+%p
+  %b Kind:
+  = @goal.kind
+
+= link_to 'Edit', edit_goal_path(@goal)
+\|
+= link_to 'Back', goals_path
