@@ -1,6 +1,18 @@
 class OrganizationsController < ApplicationController
 
 
+  def destroy
+    @organization = Organization.find(params[:id])
+
+    if @organization.destroy
+      respond_to do |format|
+        format.html { redirect_to  organization_path(@organization.parent) }
+      end
+    else
+      redirect_to @organization
+    end
+  end
+
 
   def show
     @organization = Organization.find(params[:id])
@@ -15,6 +27,11 @@ class OrganizationsController < ApplicationController
     @title = "Organizations" 
   end
 
+  def scrum_teams
+    @organizations = Organization.find_by_name("Product and Technology").children.scrum_teams
+    @title = "Product and Technology Scrum Teams"
+  end
+  
   def edit
     @organization = Organization.find(params[:id])
     @developers = Person.job("Engineering")

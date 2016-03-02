@@ -24,14 +24,14 @@
 
 - if @organization.kind == "Scrum Team"
   - team_roles = ["Engineering", "Product Management", "Project Management", "UX", "QA", "QE", "Technical Publications"]
-  - team_roles.each_slice(4).each do |group|
+  - team_roles.each_slice(3).each do |group|
     .row.top-buffer
       - group.each do |job|
-        .col-sm-2
+        .col-sm-4
           = render 'people_list', :job => job
   
 
-- if @organization.kind == "Services Team"
+- if @organization.kind == "Services Team" or  @organization.name == "Product Management"
   %br
   %h3
     Supported Teams

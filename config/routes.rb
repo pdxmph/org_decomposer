@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root 'application#index'
 
-
+  get '/scrum_teams' => 'organizations#scrum_teams'
   get '/users/' => 'users#index'
   match '/users/:id', :to => 'users#show', :as => :user,  :via => :get
   post 'goals/set_goal_priority' => 'goals#set_goal_priority'

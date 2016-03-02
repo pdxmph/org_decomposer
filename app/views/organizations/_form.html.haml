@@ -21,35 +21,35 @@
     .row
       = f.label "Engineers", :class => 'col-sm-2 control-label'
       .col-sm-2
-        =f.collection_select :person_ids, @developers, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'} 
+        =f.collection_select :person_ids, @developers, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:250px;'} 
     
 
       = f.label "QA", :class => 'col-sm-2 control-label'
       .col-sm-2
-        =f.collection_select :person_ids, @qa, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'} 
+        =f.collection_select :person_ids, @qa, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:250px;'} 
 
       = f.label "QE", :class => 'col-sm-2 control-label'
       .col-sm-2
-        =f.collection_select :person_ids, @qe, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'} 
+        =f.collection_select :person_ids, @qe, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:250px;'} 
 
     .row.top-buffer
       = f.label "Technical Publications", :class => 'col-sm-2 control-label'
       .col-sm-2
-        =f.collection_select :person_ids, @docs, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'} 
+        =f.collection_select :person_ids, @docs, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:250px;'} 
 
       = f.label "UX", :class => 'col-sm-2 control-label'
       .col-sm-2
-        =f.collection_select :person_ids, @ux, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'} 
+        =f.collection_select :person_ids, @ux, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:250px;'} 
 
       = f.label "Product", :class => 'col-sm-2 control-label'
       .col-sm-2
-        =f.collection_select :person_ids, @prod, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'}
+        =f.collection_select :person_ids, @prod, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:250px;'}
 
     .row.top-buffer
 
       = f.label "Project Management", :class => 'col-sm-2 control-label'
       .col-sm-2
-        =f.collection_select :person_ids, @pm, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:175px;'} 
+        =f.collection_select :person_ids, @pm, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:250px;'} 
 
 
     .row.top-buffer       

@@ -64,4 +64,18 @@ class GoalsController < ApplicationController
     end
   end
 
+  def destroy
+    @goal = Goal.find(params[:id])
+
+    if @goal.destroy
+      respond_to do |format|
+        format.html { redirect_to  organization_path(@goal.organization) }
+      end
+    else
+      redirect_to @goal
+    end
+  end
+
+
+  
 end

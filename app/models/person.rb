@@ -4,7 +4,7 @@ class Person < ActiveRecord::Base
   has_many :goals
 
   def self.job(job)
-    Person.includes(:organizations).where(organizations: { name: job})    
+    Person.includes(:organizations).where(organizations: { name: job}).order(:fullname)
   end
 
   

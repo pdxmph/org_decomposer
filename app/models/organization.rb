@@ -6,7 +6,7 @@ class Organization < ActiveRecord::Base
   has_many :children, class_name: "Organization", foreign_key: "parent_id"
   belongs_to :parent, class_name: "Organization"
   validates :name, :uniqueness => true
-  has_many :goals, :through => :people
+  has_many :goals
   
   def self.top_level
     puppet = Organization.find_by_name("Puppet Labs")
@@ -14,12 +14,17 @@ class Organization < ActiveRecord::Base
   end
 
   def self.scrum_teams
-    where(kind: "Scrum Team")
+    where(kind: "Scrum Team").order(:name)
   end
 
   def self.services_teams
-    where(kind: "Services Team")
+    where(kind: "Services Team").order(:name)
   end
+
+  def self.services_teams_and_prod
+    where(kind: "Services Team").order(:name)
+  end
+
   
   def has_children
     self.children.count > 0 ? true : false
@@ -30,16 +35,19 @@ class Organization < ActiveRecord::Base
   end
 
   def people_in_job(job)
-    self.people.includes(:organizations).where(organizations: {name: job})
+    self.people.includes(:organizations).where(organizations: {name: job}).order(:fullname)
   end
 
+
+  def scrum_support(scrum_team)
+    support_goal = self.goals.where("support_id = ? and kind = ?", scrum_team.id, "Scrum Team Support").first
+  end
+  
   def create_support_goals
 
     if self.kind == "Services Team"
       Organization.scrum_teams.each do |scrum_team|
         goal = Goal.find_or_create_by(organization_id: id, support_id: scrum_team.id, name: scrum_team.name, kind: "Scrum Team Support")
-        goal.priority = 0
-        goal.support = 0
         goal.save
       end
     end

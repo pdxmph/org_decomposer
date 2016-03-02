@@ -1,0 +1,39 @@
+%ol.breadcrumb
+  %li
+    = link_to "Home", root_path
+  %li.active
+    = @title
+
+%table.table
+  %thead
+    %tr
+      %th Team
+      %th Dev
+      %th Prod
+      - Organization.services_teams.each do |services_team|
+        %th
+          = services_team.name.scan(/[[:upper:]]/).join("")
+
+  
+  %tbody
+    - @organizations.each do |organization|
+      %tr
+        %td= link_to organization.name, organization
+        %td= organization.people_in_job("Engineering").count
+        %td
+          - prod = Organization.find_by_name("Product Management")
+          - goal = prod.scrum_support(organization)
+          - if goal
+            = health_indicator(goal)
+        
+        - Organization.services_teams.each do |services_team|
+          %td
+            - goal = services_team.scrum_support(organization)
+            - if goal
+              = health_indicator(goal)
+        %td= link_to 'Edit', edit_organization_path(organization)
+        %td= link_to 'Destroy', organization, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Organization', new_organization_path
