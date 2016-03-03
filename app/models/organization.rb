@@ -21,6 +21,11 @@ class Organization < ActiveRecord::Base
     where(kind: "Services Team").order(:name)
   end
 
+  def services_goals
+    services_goals = Goal.where("kind = ? and support_id = ?", "Scrum Team Support", self.id)
+    return services_goals
+  end
+  
   def self.services_teams_and_prod
     where(kind: "Services Team").order(:name)
   end

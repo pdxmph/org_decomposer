@@ -21,8 +21,12 @@
   %strong
     Total People:
   = @organization.people.count
-
+  
 - if @organization.kind == "Scrum Team"
+  %br
+  %strong
+    Languages:
+  = @organization.languages
   - team_roles = ["Engineering", "Product Management", "Project Management", "UX", "QA", "QE", "Technical Publications"]
   - team_roles.each_slice(3).each do |group|
     .row.top-buffer
