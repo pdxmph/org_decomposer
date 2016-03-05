@@ -1,0 +1,20 @@
+%h4.top-buffer
+  Overview
+
+%strong
+  Languages:
+= @organization.languages
+
+.top-buffer
+  != @organization.rendered_note
+
+
+%h4.top-buffer
+  People 
+- team_roles = ["Engineering", "Product Management", "Project Management", "UX", "QA", "QE", "Technical Publications"]
+- team_roles.each_slice(3).each do |group|
+  .row.top-buffer
+    - group.each do |job|
+      .col-sm-4
+        = render 'people_list', :job => job
+

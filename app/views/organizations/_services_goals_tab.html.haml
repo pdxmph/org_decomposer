@@ -1,0 +1,10 @@
+%table.table.sortable
+  %thead
+    %tr
+      %th Health
+      %th Team
+      %th Priority
+      %th Support
+  %tbody
+    - Organization.scrum_teams.each do |team|
+      = render :partial => "goals/index_row", :locals => {:scrum_team => team, :organization => @organization}

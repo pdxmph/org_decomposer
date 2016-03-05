@@ -12,6 +12,8 @@
  *
  *= require_tree .
  *= require_self
+ *= require bootstrap-sortable
+
  */
 
 .top-buffer { margin-top:20px; }

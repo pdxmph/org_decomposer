@@ -57,8 +57,14 @@
       .col-sm-2
         =f.collection_select :person_ids, @pm, :id, :fullname, {}, {:multiple => true, :class => 'form-control', 'style' => 'height:250px;'} 
 
+  .row.top-buffer
 
-    .row.top-buffer       
-      .actions.col-sm-offset-2
-        .col-sm-4
-          = f.submit 'Save', :class => 'btn btn-primary'
+    = f.label "Notes", :class => 'col-sm-2 control-label'
+    .col-sm-2
+      =f.text_area :note,  {:class => 'form-control', 'style' => 'height:250px;width:500px'} 
+
+
+  .row.top-buffer       
+    .actions.col-sm-offset-2
+      .col-sm-4
+        = f.submit 'Save', :class => 'btn btn-primary'

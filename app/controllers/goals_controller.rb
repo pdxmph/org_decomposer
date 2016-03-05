@@ -1,5 +1,27 @@
 class GoalsController < ApplicationController
 
+  def new
+    @goal = Goal.new
+  end
+
+  def show
+    @goal = Goal.find(params[:id])
+  end
+  
+  def create
+    @goal = Goal.new(goal_params)
+    # @goal.name = params[:name]
+    # @goal.kind = params[:kind]
+    # @goal.organization_id = params[:organization_id]
+   
+                   
+    if @goal.save
+      redirect_to @goal
+    else
+      render "new"
+    end
+  end
+  
   def set_goal_priority
     @priority = params[:priority]
     @goal = Goal.find(params[:goal_id])
@@ -76,6 +98,9 @@ class GoalsController < ApplicationController
     end
   end
 
-
-  
+  private
+  def goal_params
+    params.require(:goal).permit(:name, :kind, :organization_id)
+  end
+ 
 end

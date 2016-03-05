@@ -7,6 +7,7 @@ class Organization < ActiveRecord::Base
   belongs_to :parent, class_name: "Organization"
   validates :name, :uniqueness => true
   has_many :goals
+  markdownize! :note
   
   def self.top_level
     puppet = Organization.find_by_name("Puppet Labs")

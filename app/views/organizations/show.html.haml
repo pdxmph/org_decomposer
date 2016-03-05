@@ -9,7 +9,13 @@
   - if @organization.parent && @organization.parent.name != "Puppet Labs"
     %li
       = link_to @organization.parent.name, @organization.parent
+    %li
+      - if @organization.kind == "Scrum Team"
+        = link_to "Scrum Teams", '/scrum_teams'
+      - elsif @organization.kind == "Services Team"
+        = link_to "Services Teams", '/services_teams'
     
+      
   %li.active
     = @organization.name
   -# - if current_user.try(:super?)
@@ -17,60 +23,50 @@
   -#     = link_to edit_team_area_path(@area, :team_id => @area.team.id) do
   -#       Edit
 
-- if @organization.has_people
-  %strong
-    Total People:
-  = @organization.people.count
-  
-- if @organization.kind == "Scrum Team"
-  %br
-  %strong
-    Languages:
-  = @organization.languages
-  - team_roles = ["Engineering", "Product Management", "Project Management", "UX", "QA", "QE", "Technical Publications"]
-  - team_roles.each_slice(3).each do |group|
-    .row.top-buffer
-      - group.each do |job|
-        .col-sm-4
-          = render 'people_list', :job => job
-  
 
-- if @organization.kind == "Services Team" or  @organization.name == "Product Management"
-  %br
-  %h3
-    Supported Teams
+%ul{:role => "tablist", :class => "nav nav-tabs", :style => "margin-top:2em;"}
+  - if @organization.kind == "Scrum Team"
+    %li{:role => "presentation", :class => "active"}
+      %a{:href => "#team_composition", :role => "tab", "data-toggle" => "tab"}
+        Team Composition
+  - else
+    %li{:role => "presentation", :class => "active"}
+      %a{:href => "#org_people", :role => "tab", "data-toggle" => "tab"}
+        People
+  - if @organization.kind == "Services Team" or @organization.name == "Product Management"
+    %li{:role => "presentation"}
+      %a{:href => "#services_goals", :role => "tab", "data-toggle" => "tab"}
+        Services Goals
+  %li{:role => "presentation"}
+    %a{:href => "#team_goals", :role => "tab", "data-toggle" => "tab"}
+      Team Goals
+  - if @organization.has_children
+    %li{:role => "presentation"}
+      %a{:href => "#child_orgs", :role => "tab", "data-toggle" => "tab"}
+        Child Organizations
 
-  %table.table
-    %thead
-      %tr
-        %th Health
-        %th Team
-        %th Priority
-        %th Support
-    %tbody
-      - Organization.scrum_teams.each do |team|
-        = render :partial => "goals/index_row", :locals => {:scrum_team => team, :organization => @organization}
-  
-- if @organization.has_children
-  %h2
-    = "Groups within #{@organization.name}"
 
-  %table.table.sortable
-    %thead
-      %tr
-        %th Name
-        %th Kind
-        %th
-        %th
-        %th
+%div.tab-content
+  - if @organization.kind == "Scrum Team"
+    %div.tab-pane.active{:id => "team_composition", :style => "padding-top:2em;"}
+      = render 'scrum_team_tab'
+  - else
+    %div.tab-pane.active{:id => "org_people", :style => "padding-top:2em;"}
+      %p
+        People
+    
+  - if @organization.kind == "Services Team" or  @organization.name == "Product Management"
+    %div.tab-pane.active{:id => "services_goals", :style => "padding-top:2em;", :role => "tabpanel"}
+      = render 'services_goals_tab'
 
-    %tbody
-      - @organizations.each do |organization|
-        %tr
-          %td= link_to organization.name, organization
-          %td= organization.kind
-          %td= link_to 'Edit', edit_organization_path(organization)
-          %td= link_to 'Destroy', organization, :method => :delete, :data => { :confirm => 'Are you sure?' }
+  %div.tab-pane{:id => "team_goals", :style => "padding-top:2em;", :role => "tabpanel"}
+    %p
+      Team Goals Here
+      
+  - if @organization.has_children
+    %div.tab-pane{:id => "child_orgs", :style => "padding-top:2em;", :role => "tabpanel"}
+      = render 'child_orgs'
+
 
 %br.top-buffer
 %br.top-buffer

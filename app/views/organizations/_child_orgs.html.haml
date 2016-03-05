@@ -1,0 +1,17 @@
+%table.table.sortable
+  %thead
+    %tr
+      %th Name
+      %th Kind
+      %th
+      %th
+      %th
+
+  %tbody
+    - @organizations.each do |organization|
+      %tr
+        %td= link_to organization.name, organization
+        %td= organization.kind
+        %td= link_to 'Edit', edit_organization_path(organization)
+        %td= link_to 'Destroy', organization, :method => :delete, :data => { :confirm => 'Are you sure?' }
+

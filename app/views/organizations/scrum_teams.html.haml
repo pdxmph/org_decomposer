@@ -12,9 +12,9 @@
       %th Prod
       - Organization.services_teams.each do |services_team|
         %th
-          = services_team.name.scan(/[[:upper:]]/).join("")
+          = link_to services_team.name.scan(/[[:upper:]]/).join(""), services_team
 
-  
+
   %tbody
     - @organizations.each do |organization|
       %tr

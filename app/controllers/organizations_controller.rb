@@ -31,6 +31,12 @@ class OrganizationsController < ApplicationController
     @organizations = Organization.find_by_name("Product and Technology").children.scrum_teams
     @title = "Product and Technology Scrum Teams"
   end
+
+  def services_teams
+    @organizations = Organization.find_by_name("Product and Technology").children.services_teams
+    @title = "Product and Technology Services Teams"
+  end
+
   
   def edit
     @organization = Organization.find(params[:id])
@@ -46,7 +52,9 @@ class OrganizationsController < ApplicationController
 
   def update
     @organization = Organization.find(params[:id])
-    if @organization.update_attributes(organization_params)
+    if @organization.update_attributes(organization_params) && @organization.kind == "Scrum Team"
+      redirect_to '/scrum_teams'
+    elsif @organization.update_attributes(organization_params)
       redirect_to organization_path(@organization.parent)
     else
       render 'edit', alert: "Bad value in your edit form. Better talk to Mike."
@@ -55,6 +63,6 @@ class OrganizationsController < ApplicationController
 
   private
   def organization_params
-    params.require(:organization).permit(:name, :kind, :parent_id, :languages, :person_ids => [])
+    params.require(:organization).permit(:name, :kind, :parent_id, :languages, :note, :person_ids => [])
   end
 end
