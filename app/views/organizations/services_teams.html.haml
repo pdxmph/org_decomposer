@@ -1,0 +1,23 @@
+%ol.breadcrumb
+  %li
+    = link_to "Home", root_path
+  %li.active
+    Product and Technology Services Teams
+
+
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th
+
+  %tbody
+    - @organizations.each do |organization|
+      %tr
+        %td= link_to organization.name, organization
+        %td= link_to 'Edit', edit_organization_path(organization)
+        %td= link_to 'Destroy', organization, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Organization', new_organization_path
