@@ -57,7 +57,6 @@ module GoalsHelper
 
   
   def goal_button(goal,prop)
-    goal = Goal.find(goal)
     case prop
     when "Support"
       goal_prop = goal.support

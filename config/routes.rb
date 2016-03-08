@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  root 'application#index'
+  root 'organizations#scrum_teams'
 
   get '/scrum_teams' => 'organizations#scrum_teams'
   get '/services_teams' => 'organizations#services_teams'
